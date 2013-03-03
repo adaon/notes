@@ -1,0 +1,1 @@
+void closeEvent(QCloseEvent *event); // Вызывается автоматически при закрытии окна

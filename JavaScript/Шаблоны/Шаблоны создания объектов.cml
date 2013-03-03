@@ -1,0 +1,16 @@
+!1 Шаблоны создания объектов
+
+!2 Модули, создающие конструкторы
+
+{-
+MYAPP.namespace('MYAPP.utils.Array');
+
+MYAPP.utils.Array = (function () {
+    // Зависимости
+    var uobj = MYAPP.utilities.object,
+        // Частные свойства и методы
+        Constr;
+}());
+-}
+
+{!Пропущено:118-148!}

@@ -1,0 +1,36 @@
+После MySQL
+
+	https://docs.djangoproject.com/en/1.3/topics/db/transactions/
+	https://docs.djangoproject.com/en/1.3/topics/db/multi-db/
+	https://docs.djangoproject.com/en/1.3/topics/db/optimization/
+    https://docs.djangoproject.com/en/1.3/topics/testing/#testing-master-slave-configurations
+    https://docs.djangoproject.com/en/1.3/topics/testing/#controlling-creation-order-for-test-databases
+        
+После Django:
+
+    https://docs.djangoproject.com/en/1.3/topics/cache/#django-s-cache-framework
+    https://docs.djangoproject.com/en/1.3/topics/conditional-view-processing/#conditional-view-processing
+    https://docs.djangoproject.com/en/1.3/topics/email/#e-mail-backends
+    https://docs.djangoproject.com/en/1.3/topics/i18n/
+    https://docs.djangoproject.com/en/1.3/topics/logging/
+    https://docs.djangoproject.com/en/1.3/topics/serialization/
+    https://docs.djangoproject.com/en/1.3/topics/settings/#django-settings
+    https://docs.djangoproject.com/en/1.3/topics/generic-views/#generic-views
+    https://docs.djangoproject.com/en/1.3/howto/#how-to-guides
+    https://docs.djangoproject.com/en/1.3/faq/
+    
+Не нужно:
+
+    https://docs.djangoproject.com/en/1.3/topics/forms/formsets/#understanding-the-managementform
+    https://docs.djangoproject.com/en/1.3/topics/http/urls/#url-namespaces
+    https://docs.djangoproject.com/en/1.3/topics/http/decorators/#conditional-view-processing
+    https://docs.djangoproject.com/en/1.3/topics/http/decorators/#gzip-compression
+    https://docs.djangoproject.com/en/1.3/topics/http/decorators/#vary-headers
+    https://docs.djangoproject.com/en/1.3/topics/http/file-uploads/#upload-handlers
+    https://docs.djangoproject.com/en/1.3/topics/http/middleware/#process-template-response
+    https://docs.djangoproject.com/en/1.3/topics/http/sessions/#using-cached-sessions
+    https://docs.djangoproject.com/en/1.3/topics/generic-views-migration/#migrating-function-based-generic-views
+    https://docs.djangoproject.com/en/1.3/topics/testing/#making-requests
+    https://docs.djangoproject.com/en/1.3/topics/auth/#limiting-access-to-logged-in-users-that-pass-a-test
+    https://docs.djangoproject.com/en/1.3/topics/auth/#limiting-access-to-generic-views
+    https://docs.djangoproject.com/en/1.3/topics/auth/#other-authentication-sources

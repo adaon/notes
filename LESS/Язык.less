@@ -1,0 +1,180 @@
+// Переменные =================================================================
+
+@name: value; // Определение переменной
+body { background-color: @name; } // Использование переменной
+
+// Обячные миксины ============================================================
+
+.bordered {
+    border-top: dotted 1px black;
+}
+#my {
+    font-family: Tahoma;
+    .bordered; // Добавляет border-top: dotted 1px black;
+}
+
+// Параметризованные миксины ==================================================
+
+.border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+}
+
+// С параметрами по умолчанию =================================================
+
+.border-radius (@radius: 5px) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+}
+.my {
+    .border-radius(10px); // Обычный
+    .border-radius; // С параметрами по умолчанию
+}
+
+// Переменная @arguments ======================================================
+
+.box-shadow (@x: 0, @y: 0, @blur: 1px, @color: #000) {
+  box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
+}
+.box-shadow(2px, 5px);
+
+// Перегрузка миксинов ========================================================
+
+.mixin (dark, @color) {
+  color: darken(@color, 10%);
+}
+.mixin (light, @color) {
+  color: lighten(@color, 10%);
+}
+.mixin (@_, @color) {
+  display: block;
+}
+
+// Условия ====================================================================
+
+.mixin (@a) when (lightness(@a) >= 50%) {
+  background-color: black;
+}
+.mixin (@a) when (lightness(@a) < 50%) {
+  background-color: white;
+}
+.mixin (@a) {
+  color: @a;
+}
+
+// Вложенные правила ==========================================================
+
+#header {
+  color: black;
+
+  .navigation {
+    font-size: 12px;
+  }
+  .logo {
+    width: 300px;
+    &:hover { text-decoration: none } /* Комбинируется в #header.logo.hover */
+  }
+}
+
+// Операции ===================================================================
+
+@base: 5%;
+@filler: @base * 2;
+@other: @base + @filler;
+
+color: #888 / 4;
+background-color: @base-color + #111;
+height: 100% / 2 + @filler;
+
+// Цветовые функции ===========================================================
+
+lighten(@color, 10%);     // Возвращает цвет, который на 10% светлее заданного
+darken(@color, 10%);      // Возвращает цвет, который на 10% темнее заданного
+
+saturate(@color, 10%);    // Возвращает цвет, на 10% более насыщенный
+desaturate(@color, 10%);  // Возвращает цвет, на 10% менее насыщенный
+
+fadein(@color, 10%);      // Возвращает цвет, на 10% менее прозрачный
+fadeout(@color, 10%);     // Возвращает цвет, на 10% более прозрасный
+fade(@color, 50%);        // Возвращает цвет с 50% прозрачностью
+
+spin(@color, 10);         // Возвращает цвет, смещенный на 10
+spin(@color, -10);        // Возвращает цвет, смещенный на -10
+
+mix(@color1, @color2);    // Возвращает цвет, полученных из двух заданных
+
+hue(@color);        // Возвращает канал цвета (hue)
+saturation(@color); // Возвращат канал насыщенности
+lightness(@color);  // Возвращает канал светлости
+alpha(@color);      // Возвращает канал прозрачности
+
+// Математические функции =====================================================
+
+round(1.67); // Возвращает 2
+ceil(2.4);   // Возвращает 3
+floor(2.6);  // Возвращает 2
+
+percentage(0.5); // Возвращает 50%
+
+// Пространства имен ==========================================================
+
+// Пространство имен
+#bundle {
+  .button () {
+    display: block;
+    border: 1px solid black;
+    background-color: grey;
+    &:hover { background-color: white }
+  }
+  .tab { ... }
+  .citation { ... }
+}
+// Использование
+#header a {
+  color: orange;
+  #bundle > .button;
+}
+
+// Область видимости ==========================================================
+
+@var: red;
+#page {
+  @var: white;
+  #header {
+    color: @var; // white
+  }
+}
+#footer {
+  color: @var; // red
+}
+
+// Комментарии ================================================================
+
+/* Hello, I'm a CSS-style comment */ // Показываются в выходном файле
+// Hi, I'm a silent comment, I won't show up in your CSS // Не показываются
+
+// Импортирование =============================================================
+
+@import "lib.less";
+@import "lib";
+
+// Подстановка строк ==========================================================
+
+@base-url: "http://assets.fnord.com";
+background-image: url("@{base-url}/images/bg.png");
+
+// Выполнение JavaScript-кода =================================================
+
+// Код, заключенный в обратные апострофы, выполняется как JS
+@var: `"hello".toUpperCase() + '!'`;
+
+// Можно также вставлять строки
+@str: "hello";
+@var: ~`"@{str}".toUpperCase() + '!'`;
+
+// Кроме того, есть доступ к JS окружению
+@height: `document.body.clientHeight`;

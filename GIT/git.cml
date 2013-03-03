@@ -1,0 +1,196 @@
+!1 GIT
+
+!2 Настройки
+
+{-
+// Установка имени пользователя
+git config --global user.name 'adaon'
+
+// Установка email
+git config --global user.email 'zuncou@gmail.com'
+-}
+
+!2 Создание репозитория
+
+{-
+// Создание директории
+git mkdir dirname
+
+// Инициализация репозитория
+git init
+
+// Создание файла
+touch README
+-}
+
+!2 Коммит
+
+{-
+// Добавление файла в репозиторий
+git add README
+
+// Коммит
+git commit -m 'First commit'
+-}
+
+При выполнении команды git commit открывается редактор по умолчанию, который выбирается из следующего списка:
+
+{:
+* Переменная среды GET_EDITOR.
+* Параметр конфигурации core.editor.
+* Переменная среды VISUAL.
+* Переменная среды EDITOR.
+:}
+
+!2 Удаленный репозиторий
+
+{-
+// Добавляет удаленный репозиторий под названием "origin"
+git remote add origin https://github.com/adaon/jaspi.git
+
+// Отправляет коммит в ветвь master удаленного репозитория
+git push origin master
+-}
+
+!2 Состояние репозитория
+
+{-
+// Информация о состоянии
+git status
+
+// Однострочный формат
+git log --pretty=oneline
+
+git log --pretty=oneline --max-count=2
+git log --pretty=oneline --since='5 minutes ago'
+git log --pretty=oneline --until='5 minutes ago'
+git log --pretty=oneline --author=<your name>
+git log --pretty=oneline --all
+-}
+
+!3 Конечный формат лога
+
+Со временем, я решил, что для большей части моей работы мне подходит следующий формат лога.
+
+{-
+git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+-}
+
+Выглядит это примерно так:
+
+{-
+$ git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+* fa3c141 2011-03-09 | Added HTML header (HEAD, master) [Marina Pushkova]
+* 8c32287 2011-03-09 | Added standard HTML page tags [Marina Pushkova]
+* 43628f7 2011-03-09 | Added h1 tag [Marina Pushkova]
+* 911e8c9 2011-03-09 | First Commit [Marina Pushkova]
+-}
+
+Давайте рассмотрим его в деталях:
+
+--pretty="..." — определяет формат вывода.
+%h — укороченный хэш коммита
+%d — дополнения коммита («головы» веток или теги)
+%ad — дата коммита
+%s — комментарий
+%an — имя автора
+--graph — отображает дерево коммитов в виде ASCII-графика
+--date=short — сохраняет формат даты коротким и симпатичным
+
+!2 Ветки
+
+{-
+// Переключение на выбранный коммит
+git checkout <hash>
+
+git checkout master
+-}
+
+!2 Теги
+
+{-
+// Отображение доступных тегов
+git tag
+
+// Присваивание текущей версии тега
+git tag v1
+
+// Переключение на версию, предшествующую теговой
+git checkout v1^
+git checkout v1~1
+-}
+
+!2 Отмена локальных изменений (до индексации)
+
+{-
+// Отмена неиндексированных изменений
+git checkout files
+-}
+
+!2 Отмена проиндексированных изменений (до коммита)
+
+{-
+// Сброс буферной зоны (отмена индексации изменений, файлы при этом не изменяются)
+git reset HEAD files
+-}
+
+!2 Отмена коммитов
+
+{-
+// Отмена текущего коммита (последнего)
+git revert HEAD
+-}
+
+!2 Удаление коммитов из ветки
+
+{-
+// Сброс ветки к конкретному коммиту
+git reset --hard <commit>
+-}
+
+!2 Удаление тега
+
+{-
+git tag -d <tag>
+-}
+
+!2 Внесение изменений в коммиты
+
+{-
+// Изменяет текущий коммит
+git commit --amend -m 'Message'
+-}
+
+!2 Перемещение файлов
+
+{-
+git mv hello.html lib
+-}
+
+!2 Создание ветки
+
+{-
+// Является шорткатом для git branch <name>; git checkout <name>
+git checkout -b <name>
+-}
+
+!2 Навигация по веткам
+
+{-
+// Переключение между ветками
+git checkout master
+git checkout dev
+-}
+
+!2 Слияние
+
+{-
+// Слияние веток
+git merge name
+-}
+
+!2 Клонирование репозитория
+
+{-
+git clone reponame
+-}

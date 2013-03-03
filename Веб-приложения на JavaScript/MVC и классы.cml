@@ -1,0 +1,109 @@
+!1 MVC и классы
+
+!2 Классы
+
+!3 Начальная функция для создания классов
+
+{-
+var Class = function () {
+    var klass = function () {
+        this.init.apply(this, arguments);
+    };
+    klass.prototype.init = function () {};
+    return klass;
+};
+
+// Using:
+var Person = new Class();
+Person.prototype.init = function (name) {
+    this.name = name || '';
+};
+var me = new Person('Denis Ivanov');
+-}
+
+!3 Добавление функций к классам
+
+Сложилась практика добавления короткого имени для прототипа:
+
+{-
+Person.fn = Person.prototype;
+-}
+
+!3 Добавление функций к классам
+
+Расширенная версия функции для создания классов:
+
+{-
+var Class = function () {
+    // Constructor
+    var klass = function () {
+        this.init.apply(this, arguments);
+    };
+    klass.prototype.init = function () {};
+    // Shortcut for prototype
+    klass.fn = klass.prototype;
+    // Shortcut for klass
+    klass.fn.parent = klass;
+    // Function for class extending
+    klass.extend = function (obj) {
+        var extended = obj.extended;
+        for (var prop in obj) {
+            klass[prop] = obj[prop];
+        }
+        if (extended) { extended(klass); }
+    };
+    // Function for class instance extending
+    klass.include = function () {
+        var included = obj.included;
+        for (var prop in obj) {
+            klass.fn[prop] = obj[prop];
+        }
+        if (included) { included(klass); }
+    };
+    return klass;
+};
+-}
+
+Таким образом, можно расширять класс с помощью модулей (альтернатива наследованию ):
+
+{-
+var ORMModule = {
+    save: function () {
+        // General function
+    }
+};
+
+var Person = new Class();
+var Asset = new Class();
+Person.include(ORMModule);
+Asset.include(ORMModule);
+-}
+
+!3 Наследование в классе с использованием prototype
+
+Наследование можно реализовать путем присваивания свойству прототипа конструктора экземпляра родительского класса:
+
+{-
+Child.prototype = new Parent();
+-}
+
+!3 Добавление наследования к функции класса:
+
+{-
+var Class = function (parent) {
+    var klass = function () {
+        this.init.apply(this, arguments);
+    };
+    if (parent) {
+        var subclass = function () {};
+        subclass.prototype = parent.prototype;
+        klass.prototype = new subclass();
+    }
+    klass.prototype.init = function () {};
+    klass.fn = klass.prototype;
+    klass.fn.parent = klass;
+    klass._super = parent;
+    /* Код включений */
+    return klass;
+};
+-}

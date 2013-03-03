@@ -1,0 +1,89 @@
+{-
+/* Создание HTTP прослоек */
+
+var connect = require('connect');
+
+var app = connect.createServer(function(request, response) {
+	response.end('Hello, world!');
+});
+
+// Создание асинхронных прослоек
+
+function wait(request, response, next) {
+	setTimeout(function() {
+		next();
+	}, 3000);
+}
+
+var app = connect.createServer(wait, function(request, response) {});
+
+// Альтернативная версия
+
+var connect = require('connect');
+
+var app = connect();
+
+// Установка прослойки логгера
+app.use(connect.logger());
+
+app.use(function(request, response) {
+
+});
+
+app.listen(8000);
+
+/* Логирование */
+
+app.use(connect.logger()); // Стандартный обработчик
+app.use(connect.logger('tiny')); // Сокращенные сообщения
+// Вместо tiny можно передавать строку формата, использующую следующие литералы:
+:req[header] // Заголовок запроса, например :req[Accept]
+:http-version
+:response-time // Разница между временем начала и временем конца запроса
+:remote-addr // Удаленный IP-адрес клиента
+:date // Форматированная дата создания лога
+:method
+:url
+:referrer // Содержимое заголовка referrer
+:user-agent // Строка пользовательского агента
+:status // Статус HTTP ответа
+
+/* Обработка ошибок */
+
+app.use(function(request, response, next) { next(new Error('')); });
+app.use(connect.errorHandler());
+
+/* Обслуживание статических файлов */
+
+// /static/images/img.jpg -> 127.0.0.1:8000/images/img.jpg
+app.use(connect.static(__dirname + '/static'));
+
+/* Разбор строки запроса */
+
+app.use(connect.query());
+app.use(function(request, response) {
+	request.query.name; // 127.0.0.1:8000?name=Denis
+});
+
+/* Разбор тела запроса */
+
+app.use(connect.bodyParser());
+app.body; // {name:value, name:value}
+
+/* Разбор Cookies */
+
+app.use(connect.cookieParser());
+app.use(function(request, response) {
+	request.cookies; // {name:value, name:value}
+});
+
+/* Использование сессии */
+
+app.use(connect.cookieParser('secret_string'));
+app.use(connect.session({
+	cookie: {maxAge: 24*60*60*1000}
+}));
+app.use(function(request, response) {
+	req.session['name'] = 'Denis Ivanov';
+});
+-}

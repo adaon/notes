@@ -1,0 +1,69 @@
+{-
+
+// Server
+
+var http = require('http');
+var io = require('socket.io');
+var fs = require('fs');
+
+var server = http.createServer(function(request, response) {
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	fs.createReadStream('./index.html').pipe(response);
+});
+server.listen(8000);
+
+io.listen(server).sockets.on('connection', function(socket) {
+	socket.emit('data', {name:'Denis Ivanov', age:21}, 55);
+});
+
+// Client
+<html>
+	<head>
+		<title>Socket.IO example application</title>
+		<script src="http://localhost:4000/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io.connect('http://localhost:4000');
+			socket.emit('my event', 'Hello world.');
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
+
+// Посылает сообщение всем подключенным клиентам
+socket.broadcast.emit('my_event', 'data');
+
+/* Хранение данных, ассоциированных с клиентом */
+
+socket.set('name', 'Denis Ivanov', function() {
+	// ready
+});
+socket.get('name', function(error, name) {
+	// ready
+});
+
+/* Пространства имен */
+
+// Server
+var chat = io.of('/chat').on('connection', function(socket) {});
+// Client
+
+/* Вызов функций */
+
+// Server
+var io = require('socket.io').listen(80);
+
+io.sockets.on('connection', function (socket) {
+  socket.on('ferret', function (name, fn) {
+    fn('woot');
+  });
+});
+
+// Client
+var socket = io.connect(); // TIP: .connect with no args does auto-discovery
+	socket.on('connect', function () { // TIP: you can avoid listening on `connect` and listen on events directly too!
+	socket.emit('ferret', 'tobi', function (data) {
+		console.log(data); // data will be 'woot'
+	});
+});
+-}
